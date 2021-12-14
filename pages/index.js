@@ -2,10 +2,6 @@ import Head from 'next/head';
 // import { gql } from '@apollo/client';
 // import client from '../apollo-client';
 import { request, gql } from 'graphql-request';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
 import PostCard from '../components/PostCard';
 import SideWidget from '../components/SideWidget';
@@ -96,7 +92,7 @@ export default function Home({ asd }) {
 	return (
 		<div className="container	mx-auto p-2 lg:p-0">
 			<Head>
-				<title>Create Next App</title>
+				<title>Game Blog</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 

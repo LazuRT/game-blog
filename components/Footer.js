@@ -21,25 +21,25 @@ const Footer = () => {
 					</div>
 					<div className="border-b md:border-b-0 md:border-r pb-2 flex flex-row md:w-1/3 justify-evenly ">
 						<div className="flex flex-col ">
-							<a href="">About Us</a>
-							<a href="">Meet the Team</a>
-							<a href="">About Us</a>
-							<a href=""> Advertising</a>
+							<a href="/">About Us</a>
+							<a href="/">Meet the Team</a>
+							<a href="/">About Us</a>
+							<a href="/"> Advertising</a>
 						</div>
 						<div className="flex flex-col">
-							<a href="">Privacy</a>
-							<a href="">Term and Condition</a>
-							<a href="">Advertising</a>
-							<a href="">Disclaimer</a>
+							<a href="/">Privacy</a>
+							<a href="/">Term and Condition</a>
+							<a href="/">Advertising</a>
+							<a href="/">Disclaimer</a>
 						</div>
 					</div>
 					<div className="flex flex-col mx-auto pb-2">
 						{/* <div className=''> */}
 						<h3 className="text-xl font-semibold">Connect with Us</h3>
 						<a href="/">Instagram</a>
-						<a href="">Facebook</a>
-						<a href="">Youtube</a>
-						<a href="">Twitter</a>
+						<a href="/">Facebook</a>
+						<a href="/">Youtube</a>
+						<a href="/">Twitter</a>
 						{/* </div> */}
 					</div>
 				</div>

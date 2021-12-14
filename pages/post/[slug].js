@@ -132,7 +132,7 @@ const singlePostPage = ({ post }) => {
 	return (
 		<div className="container	mx-auto p-2 lg:p-0">
 			<Head>
-				<title>{title}</title>
+				<title>{title} - Game Blog</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 
