@@ -44,6 +44,7 @@ export async function getStaticProps() {
 		props: {
 			asd: result.posts,
 		},
+		revalidate: 15,
 	};
 }
 

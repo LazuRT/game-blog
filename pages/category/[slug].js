@@ -15,6 +15,7 @@ export async function getStaticProps({ params }) {
 			data: posts,
 			category: params.slug,
 		},
+		revalidate: 15,
 	};
 }
 
