@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { FaTwitter, FaFacebook } from 'react-icons/fa';
 import AuthorCard from '../../components/AuthorCard';
 const client = new GraphQLClient('https://api-ap-northeast-1.graphcms.com/v2/ckw0nad1i4eb601xwbtqz52bv/master');
+import { useRouter } from 'next/router';
 
 export async function getStaticProps({ params }) {
 	// const data = await client.request(
@@ -43,11 +44,17 @@ export async function getStaticProps({ params }) {
 	// );
 
 	const data = await getSinglePostDetail(params.slug);
+	// console.log(data);
+	if (!data.post) {
+		return {
+			notFound: true,
+		};
+	}
+
 	return {
 		props: {
 			post: data.post,
 		},
-		revalidate: 15,
 	};
 }
 
@@ -68,11 +75,19 @@ export async function getStaticPaths() {
 		paths: posts.map(({ slug }) => ({
 			params: { slug },
 		})),
-		fallback: false,
+		fallback: true,
 	};
 }
 
 const singlePostPage = ({ post }) => {
+	const router = useRouter();
+
+	// If the page is not yet generated, this will be displayed
+	// initially until getStaticProps() finishes running
+	if (router.isFallback) {
+		return <div className="container	mx-auto p-2 min-h-screen lg:p-0">Loading...</div>;
+	}
+
 	const {
 		title,
 		createdAt,
