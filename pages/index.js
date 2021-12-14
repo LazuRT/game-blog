@@ -1,6 +1,4 @@
 import Head from 'next/head';
-// import { gql } from '@apollo/client';
-// import client from '../apollo-client';
 import { request, gql } from 'graphql-request';
 
 import PostCard from '../components/PostCard';

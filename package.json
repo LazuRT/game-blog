@@ -6,7 +6,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@apollo/client": "^3.4.17",
     "graphql": "^15.7.2",
     "graphql-request": "^3.6.1",
     "markdown-to-jsx": "^7.1.3",
