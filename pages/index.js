@@ -1,82 +1,117 @@
-import Head from 'next/head'
+import Head from 'next/head';
+// import { gql } from '@apollo/client';
+// import client from '../apollo-client';
+import { request, gql } from 'graphql-request';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
-export default function Home() {
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+import PostCard from '../components/PostCard';
+import SideWidget from '../components/SideWidget';
+import Carousel from '../components/Carousel';
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
+export async function getStaticProps() {
+	const query = gql`
+		query GetPosts {
+			posts(orderBy: createdAt_DESC) {
+				id
+				title
+				slug
+				excerpt
+				createdAt
+				content {
+					markdown
+				}
+				author {
+					id
+					name
+					bio
+					slug
+					photo {
+						url
+					}
+				}
+				categories {
+					id
+					name
+					slug
+				}
+				image {
+					url
+				}
+			}
+		}
+	`;
 
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
-          </code>
-        </p>
+	const result = await request(process.env.NEXT_PUBLIC_GRAPHCMS_ENDPOINT, query);
 
-        <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
+	return {
+		props: {
+			asd: result.posts,
+		},
+	};
+}
 
-          <a
-            href="https://nextjs.org/learn"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
+// const posts = [
+// 	{
+// 		id: 1,
+// 		title: 'New Nintendo Switch',
+// 		img: 'https://images.unsplash.com/photo-1585427795543-33cf23ea2853?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
+// 		excerpt:
+// 			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam voluptatem, quasi accusantium deleniti consectetur fugit cumque atque praesentium magni eveniet.',
+// 		categories: 'tech',
+// 	},
+// 	{
+// 		id: 2,
+// 		title: 'Playstation 5 Review',
+// 		img: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+// 		excerpt:
+// 			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam voluptatem, quasi accusantium deleniti consectetur fugit cumque atque praesentium magni eveniet.',
+// 		categories: 'review',
+// 	},
+// 	{
+// 		id: 3,
+// 		title: 'Recommended VR Game',
+// 		img: 'https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2012&q=80',
+// 		excerpt:
+// 			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam voluptatem, quasi accusantium deleniti consectetur fugit cumque atque praesentium magni eveniet.',
+// 		categories: 'editorial',
+// 	},
+// 	{
+// 		id: 4,
+// 		title: 'New Online Multiplayer Mode',
+// 		img: 'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
+// 		excerpt:
+// 			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam voluptatem, quasi accusantium deleniti consectetur fugit cumque atque praesentium magni eveniet.',
+// 		categories: 'news',
+// 	},
+// ];
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
+// import Swiper core and required modules
+import SwiperCore, { Navigation, Pagination } from 'swiper';
+SwiperCore.use([Navigation, Pagination]);
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+export default function Home({ asd }) {
+	return (
+		<div className="container	mx-auto p-2 lg:p-0">
+			<Head>
+				<title>Create Next App</title>
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
 
-      <footer className="flex items-center justify-center w-full h-24 border-t">
-        <a
-          className="flex items-center justify-center"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
-        </a>
-      </footer>
-    </div>
-  )
+			<Carousel />
+			<div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+				<div className="lg:col-span-8 col-span-1">
+					{asd.map((post) => (
+						<PostCard post={post} key={post.id} />
+					))}
+				</div>
+				<div className="lg:col-span-4 col-span-1">
+					<SideWidget content="featuredPost" />
+					<SideWidget content="review" />
+				</div>
+			</div>
+		</div>
+	);
 }
